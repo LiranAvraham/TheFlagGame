@@ -8,7 +8,7 @@ BOARD_NUM_ROWS = 25
 BOARD_NUM_COLS = 50
 
 NUM_OF_GRASS = 20
-GRASS = pygame.image.load("grass.png")
+GRASS_IMAGE = pygame.image.load("grass.png")
 LENGTH_GRASS = 100
 HEIGHT_GRASS = 100
 
@@ -17,9 +17,9 @@ SOLDIER_NUM_COLS = 2
 LENGTH_SOLDIER = 100
 HEIGHT_SOLIDER = 100
 SOLDIER_FIRST_LOC = (0,0)
-SOLDIER = pygame.image.load("soldier.png")
+SOLDIER_IMAGE = pygame.image.load("soldier.png")
 
-FLAG = pygame.image.load("flag.png")
+FLAG_IMAGE = pygame.image.load("flag.png")
 FLAG_NUM_ROWS = 3
 FLAG_NUM_COLS = 4
 LENGTH_FLAG = 100
@@ -27,9 +27,15 @@ HEIGHT_FLAG = 100
 X_FLAG = LENGTH_WINDOW - LENGTH_FLAG
 Y_FLAG = HEIGHT_WINDOW - HEIGHT_FLAG
 
-MINE = pygame.image.load("mine.png")
+MINE_IMAGE = pygame.image.load("mine.png")
+NUM_OF_MINES = 20
 MINE_NUM_ROWS = 1
 MINE_NUM_COLS = 3
 LENGTH_MINE = 100
 HEIGHT_MINE = 100
 
+SOLDIER_BODY = "SOLDIER BODY"
+SOLDIER_LEGS = "SOLDIER LEG"
+EMPTY_PLACE = "EMPTY"
+MINE = "MINE"
+FLAG = "FLAG"
