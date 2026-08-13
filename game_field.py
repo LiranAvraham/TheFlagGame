@@ -2,8 +2,10 @@ import random
 
 from consts import *
 
+# matrix = []
 
 def create_matrix():
+    # global matrix
     matrix = []
 
     for row in range(BOARD_NUM_ROWS):
@@ -37,34 +39,36 @@ def add_mines_to_matrix(matrix):
         can_place_mine = True
 
         for i in range(MINE_NUM_COLS):
+            if matrix[row][col + i] != EMPTY_PLACE and matrix[0][0] == SOLDIER_LEGS:
+                can_place_mine = False
+
+        if can_place_mine:
+            for i in range(MINE_NUM_COLS):
+                matrix[row][col] = MINE
+
+
+            mines_created += 1
+
+def add_grass_to_matrix(matrix):
+    grass_created = 0
+    while grass_created < NUM_OF_GRASS:
+        row = random.randint(0, BOARD_NUM_ROWS - 1)
+        col = random.randint(0, BOARD_NUM_COLS - MINE_NUM_COLS)
+        can_place_mine = True
+        for i in range(MINE_NUM_COLS):
             if matrix[row][col + i] != EMPTY_PLACE:
                 can_place_mine = False
 
         if can_place_mine:
             for i in range(MINE_NUM_COLS):
-                matrix[row][col + i] = MINE
+                matrix[row][col] = GRASS
 
-            mines_created += 1
-def create_matrix_grass():
-    grass_created = 0
-    matrix_grass= []
-    can_place_GRASS = True
+                grass_created += 1
+
+def is_not_grass(matrix):
     for row in range(BOARD_NUM_ROWS):
-        row = []
-
         for col in range(BOARD_NUM_COLS):
-            row.append(EMPTY_PLACE)
+            if matrix[row][col] != EMPTY_PLACE:
+                return False
 
-        matrix_grass.append(row)
-    while grass_created< NUM_OF_GRASS:
-        row = random.randint(0, BOARD_NUM_ROWS - 1)
-        col = random.randint(0, BOARD_NUM_COLS -GRASS_NUM_COLS)
-
-        for i in range(GRASS_NUM_COLS):
-            if matrix_grass[row][col + i] != EMPTY_PLACE:
-                can_place_GRASS = False
-        if can_place_GRASS:
-            for i in range(GRASS_NUM_COLS):
-                matrix_grass[row][col + i] =GRASS
-            grass_created += 1
-    return matrix_grass
+    return True
