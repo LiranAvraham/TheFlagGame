@@ -74,7 +74,37 @@ while running:
             #     soldier_image = pygame.transform.scale(SOLDIER_IMAGE_NIGHT, (cell_width * 2, cell_height * 4))
             #     screen.blit(soldier_image, (soldier_col * cell_width, soldier_row * cell_height))
             #     screen.fill(BACKGROUND_COLOR_FOR_NIGHT_MODE)
+            if show_mines:
+                current_time = pygame.time.get_ticks()
 
+                if current_time - show_mines_start_time >= 1000:
+                    show_mines = False
+                    soldier_image = pygame.transform.scale(SOLDIER_IMAGE, (cell_width * 2, cell_height * 4))
+                    # screen.fill(BACKGROUND_COLOR_FOR_NIGHT_MODE)
+                    # else:
+                    #     screen.fill(BACKGROUND_COLOR_FOR_NIGHT_MODE)
+
+                    pygame.display.flip()
+            if show_mines:
+                # for row in range(BOARD_NUM_ROWS):
+                #     for col in range(SOLDIER_NUM_COLS):
+                #         if matrix[row][col] = MINE
+                grid(matrix, screen)
+                pygame.time.wait(1000)
+                for row in range(BOARD_NUM_ROWS):
+                    for col in range(BOARD_NUM_COLS):
+                        if matrix[row][col] == MINE:
+                            x = col * cell_width
+                            y = row * cell_height
+                            screen.blit(mine_image, (x, y))
+            else:
+                screen.fill(BACKGROUND_COLOR)
+                for row in range(BOARD_NUM_ROWS):
+                    for col in range(BOARD_NUM_COLS):
+                        if matrix[row][col] != EMPTY_PLACE:
+                            x = col * cell_width
+                            y = row * cell_height
+                            screen.blit(grass_image, (x, y))
             if not show_mines:
                 if event.key == pygame.K_UP:
                     if soldier_row > 0:
@@ -92,17 +122,7 @@ while running:
                     if soldier_col + SOLDIER_NUM_COLS < BOARD_NUM_COLS:
                         soldier_col += 1
 
-    if show_mines:
-        current_time = pygame.time.get_ticks()
 
-        if current_time - show_mines_start_time >= 1000:
-            show_mines = False
-            soldier_image = pygame.transform.scale(SOLDIER_IMAGE, (cell_width * 2, cell_height * 4))
-            # screen.fill(BACKGROUND_COLOR_FOR_NIGHT_MODE)
-    # else:
-    #     screen.fill(BACKGROUND_COLOR_FOR_NIGHT_MODE)
-
-        pygame.display.flip()
 
     legs_row = soldier_row + SOLDIER_NUM_ROWS - 1
 
@@ -122,28 +142,10 @@ while running:
 
             running = False
 
-    if show_mines:
-        screen.fill(BACKGROUND_COLOR_FOR_NIGHT_MODE)
-    else:
-        screen.fill(BACKGROUND_COLOR)
 
-    if show_mines:
-        # for row in range(BOARD_NUM_ROWS):
-        #     for col in range(SOLDIER_NUM_COLS):
-        #         if matrix[row][col] = MINE
-        for row in range(BOARD_NUM_ROWS):
-            for col in range(BOARD_NUM_COLS):
-                if matrix[row][col] == MINE:
-                    x = col * cell_width
-                    y = row * cell_height
-                    screen.blit(mine_image, (x, y))
-    else:
-        for row in range(BOARD_NUM_ROWS):
-            for col in range(BOARD_NUM_COLS):
-                if matrix[row][col] != EMPTY_PLACE:
-                    x = col * cell_width
-                    y = row * cell_height
-                    screen.blit(grass_image, (x, y))
+
+
+
 
     screen.blit(soldier_image, (soldier_col * cell_width, soldier_row * cell_height))
 

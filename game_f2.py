@@ -1,10 +1,9 @@
-import contans
+import consts
 from soldier import *
 matrix = [["SOLDIER BODY" ,"SOLDIER BODY" ,"EMPTY" ,"MINE" ], ["SOLDIER BODY" ,"SOLDIER BODY" ,"MINE" , "EMPTY"], [ "SOLDIER LEG","SOLDIER LEG" , "MINE", "FLAG" ]]
 
-
 def is_body_on_flag():
-    for loc in contans.FLAG_INDEX:
+    for loc in consts.FLAG_INDEX:
         for body in solder_body_place():
             if loc == body:
                 return True
@@ -14,10 +13,11 @@ def is_body_on_flag():
 def is_leg_on_mine():
     for row in range(len(matrix)):
         for col in range(len(matrix[row])):
-            if matrix[row][col] == contans.MINE:
+            if matrix[row][col] == consts.MINE:
                 return True
             else:
                 continue
+
 
 # def is_win():
 #     if solder_place() in flag_loc():
