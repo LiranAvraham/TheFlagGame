@@ -45,3 +45,26 @@ def add_mines_to_matrix(matrix):
                 matrix[row][col + i] = MINE
 
             mines_created += 1
+def create_matrix_grass():
+    grass_created = 0
+    matrix_grass= []
+    can_place_GRASS = True
+    for row in range(BOARD_NUM_ROWS):
+        row = []
+
+        for col in range(BOARD_NUM_COLS):
+            row.append(EMPTY_PLACE)
+
+        matrix_grass.append(row)
+    while grass_created< NUM_OF_GRASS:
+        row = random.randint(0, BOARD_NUM_ROWS - 1)
+        col = random.randint(0, BOARD_NUM_COLS -GRASS_NUM_COLS)
+
+        for i in range(GRASS_NUM_COLS):
+            if matrix_grass[row][col + i] != EMPTY_PLACE:
+                can_place_GRASS = False
+        if can_place_GRASS:
+            for i in range(GRASS_NUM_COLS):
+                matrix_grass[row][col + i] =GRASS
+            grass_created += 1
+    return matrix_grass
