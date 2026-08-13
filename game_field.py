@@ -1,43 +1,47 @@
-import contans
+import random
 
-matrix = [["SOLDIER BODY" ,"SOLDIER BODY" ,"EMPTY" ,"MINE" ], ["SOLDIER BODY" ,"SOLDIER BODY" ,"MINE" , "EMPTY"], [ "SOLDIER LEG","SOLDIER LEG" , "MINE", "FLAG" ]]
+from consts import *
 
-def solder_body_place():
-    body_place = []
-    for row in range(len(matrix)):
-        for col in range(len(matrix[row])):
-            if matrix[row][col] == contans.SOLDIER_BODY:
-                body_place.append((row,col))
-    return body_place
 
-def solder_legs_place():
-    legs_place = []
-    for row in range(len(matrix)):
-        for col in range(len(matrix[row])):
-            if matrix[row][col] == contans.SOLDIER_LEGS:
-                legs_place.append((row,col))
-    return legs_place
+def create_matrix():
+    matrix = []
 
-def is_body_on_flag():
-    for loc in contans.FLAG_INDEX:
-        for body in solder_body_place():
-            if loc == body:
-                return True
-            else:
-                continue
+    for row in range(BOARD_NUM_ROWS):
+        row = []
 
-def is_leg_on_mine():
-    for row in range(len(matrix)):
-        for col in range(len(matrix[row])):
-            if matrix[row][col] == contans.MINE:
-                return True
-            else:
-                continue
+        for col in range(BOARD_NUM_COLS):
+            row.append(EMPTY_PLACE)
 
-# def is_win():
-#     if solder_place() in flag_loc():
-#         return True
-#     else:
-#         return False
-#
-# print(is_win())
+        matrix.append(row)
+
+    return matrix
+
+
+def add_flag_to_matrix(matrix):
+    flag_row = BOARD_NUM_ROWS - FLAG_NUM_ROWS
+    flag_col = BOARD_NUM_COLS - FLAG_NUM_COLS
+
+    for row in range(flag_row, flag_row + FLAG_NUM_ROWS):
+        for col in range(flag_col, flag_col + FLAG_NUM_COLS):
+            matrix[row][col] = FLAG
+
+    return flag_row, flag_col
+
+def add_mines_to_matrix(matrix):
+    mines_created = 0
+
+    while mines_created < NUM_OF_MINES:
+        row = random.randint(0, BOARD_NUM_ROWS - 1)
+        col = random.randint(0, BOARD_NUM_COLS - MINE_NUM_COLS)
+
+        can_place_mine = True
+
+        for i in range(MINE_NUM_COLS):
+            if matrix[row][col + i] != EMPTY_PLACE:
+                can_place_mine = False
+
+        if can_place_mine:
+            for i in range(MINE_NUM_COLS):
+                matrix[row][col + i] = MINE
+
+            mines_created += 1
