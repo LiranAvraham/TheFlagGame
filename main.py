@@ -1,3 +1,5 @@
+import time
+
 import pygame
 import sys
 
@@ -15,6 +17,8 @@ flag_row, flag_col = add_flag_to_matrix(matrix)
 
 add_mines_to_matrix(matrix)
 
+add_grass_to_matrix(matrix)
+
 soldier_row = 0
 soldier_col = 0
 
@@ -28,7 +32,12 @@ flag_image = pygame.transform.scale(FLAG_IMAGE, (cell_width * 4, cell_height * 3
 mine_image = pygame.transform.scale(MINE_IMAGE, (cell_width * 3, cell_height))
 
 grass_image = pygame.transform.scale(GRASS_IMAGE, (LENGTH_GRASS, HEIGHT_GRASS))
-grass_locations = []
+# grass_locations = []
+
+font = pygame.font.SysFont("Arial", 50)
+
+winner_dialog = font.render("You won", True, BACKGROUND_COLOR_FOR_NIGHT_MODE)
+loser_dialog = font.render("You lost", True, BACKGROUND_COLOR_FOR_NIGHT_MODE)
 
 show_mines = False
 show_mines_start_time = 0
@@ -94,8 +103,20 @@ while running:
 
     for col in range(soldier_col, soldier_col + SOLDIER_NUM_COLS):
         if matrix[legs_row][col] == MINE:
-            print("You Lost!")
+            screen.blit(loser_dialog, (50, 50))
+            pygame.time.wait(5000)
+
+            screen.fill(BACKGROUND_COLOR_FOR_NIGHT_MODE)
+
             running = False
+
+        elif matrix[legs_row][col] == FLAG:
+            # print("You won")
+            screen.blit(winner_dialog, (50, 50))
+            pygame.time.wait(5000)
+
+            running = False
+
     if show_mines:
         screen.fill(BACKGROUND_COLOR_FOR_NIGHT_MODE)
     else:
@@ -111,6 +132,13 @@ while running:
                     x = col * cell_width
                     y = row * cell_height
                     screen.blit(mine_image, (x, y))
+    else:
+        for row in range(BOARD_NUM_ROWS):
+            for col in range(BOARD_NUM_COLS):
+                if matrix[row][col] != EMPTY_PLACE:
+                    x = col * cell_width
+                    y = row * cell_height
+                    screen.blit(grass_image, (x, y))
 
     screen.blit(soldier_image, (soldier_col * cell_width, soldier_row * cell_height))
 
